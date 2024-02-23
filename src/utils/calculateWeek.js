@@ -26,6 +26,12 @@ export const getPrevWeekStartDate = currentWeekStart => {
   return new Date(currentWeekStart - weekTimeMs);
 };
 
-export const getNextWeekStartDate = currentWeekStart => {
-  return new Date(currentWeekStart + weekMs);
+// export const getNextWeekStartDate = currentWeekStart => {
+//   return new Date(currentWeekStart + weekMs);
+// };
+
+export const getEndWeekDate = currentWeekStartMs => {
+  const endDate = new Date(currentWeekStartMs + weekMs);
+  endDate.setHours(23, 59, 59, 999);
+  return endDate;
 };

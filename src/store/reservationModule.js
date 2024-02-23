@@ -1,10 +1,26 @@
+import { getBookingsbyWeek } from "@/services/api";
+
 export default {
   state: {
     bookings: [],
   },
 
-  mutations: {},
+  mutations: {
+    setBookings(state, payload) {
+      state.bookings = payload;
+    },
+  },
 
-  getters: {},
-  actions: {},
+  getters: {
+    getBookings: state => state.bookings,
+  },
+
+  actions: {
+    fetchWeekBookings(context, payload) {
+      const data = getBookingsbyWeek(payload);
+      // console.log(data);
+
+      context.commit("setBookings", data);
+    },
+  },
 };

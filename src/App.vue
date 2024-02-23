@@ -10,6 +10,10 @@
         <span>{{ room.id }}</span> <span> {{ room.name }}</span>
       </p>
     </div>
+
+    {{ week }}
+    {{ bookings }}
+    <!-- {{ this.$store.getters.getBookings }} -->
   </div>
 </template>
 
@@ -29,22 +33,31 @@ export default {
     rooms() {
       return this.$store.getters.getRooms;
     },
+
+    week() {
+      return this.$store.getters.getWeek;
+    },
+
+    bookings() {
+      return this.$store.getters.getBookings;
+    },
   },
 
   mounted() {
     this.$store.dispatch("fetchRooms");
+    this.$store.dispatch("fetchWeekBookings", this.$store.getters.getWeek);
+  },
+
+  watch: {
+    week: "updateBookings",
   },
 
   methods: {
     // ...mapMutations(["increaseWeek", "decreaseWeek", "setWeek"]),
-    // calcWeek() {
-    //   const startWeekDate = getCurrentWeekStartDateMs();
-    //   // const endWeekDate = getEndWeekDate(startWeekDate);
-    //   // const prevWeekDate = new Date(
-    //   //   startWeekDate.getTime() - 7 * 24 * 60 * 60 * 1000
-    //   // );
-    //   console.log(getPrevWeekStartDate(startWeekDate));
-    // },
+
+    updateBookings() {
+      this.$store.dispatch("fetchWeekBookings", this.$store.getters.getWeek);
+    },
   },
 };
 </script>

@@ -18,7 +18,6 @@ export default {
   actions: {
     fetchRooms(context) {
       const data = getRoomsFromBookings();
-      console.log(data);
       context.commit("setRooms", data);
     },
   },

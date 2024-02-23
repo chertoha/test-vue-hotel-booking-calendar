@@ -28,7 +28,7 @@ export default {
   },
 
   mounted() {
-    this.setCurrentWeek();
+    // this.setCurrentWeek();
   },
 
   methods: {

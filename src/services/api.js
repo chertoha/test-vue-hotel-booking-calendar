@@ -1,4 +1,5 @@
 import bookings from "@/data/bookings.json";
+import { getEndWeekDate, transformMsToDate } from "@/utils/calculateWeek";
 
 export const getRoomsFromBookings = () => {
   const roomsObject = bookings.reduce(
@@ -15,4 +16,17 @@ export const getRoomsFromBookings = () => {
     id,
     name: roomsObject[id],
   }));
+};
+
+export const getBookingsbyWeek = startWeekDateMs => {
+  const startWeekDate = transformMsToDate(startWeekDateMs);
+  const endWeekDate = getEndWeekDate(startWeekDateMs);
+
+  //   console.log(startWeekDate);
+  //   console.log(endWeekDate);
+
+  return bookings.filter(
+    ({ start, end }) =>
+      new Date(end) >= startWeekDate && new Date(start) <= endWeekDate
+  );
 };
