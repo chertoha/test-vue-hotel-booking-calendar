@@ -1,6 +1,15 @@
 <template>
   <div id="app">
     <NavBar />
+
+    <div>
+      <p
+        v-for="room in rooms"
+        :key="room.id"
+      >
+        <span>{{ room.id }}</span> <span> {{ room.name }}</span>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -16,9 +25,15 @@ export default {
     NavBar,
   },
 
-  computed: {},
+  computed: {
+    rooms() {
+      return this.$store.getters.getRooms;
+    },
+  },
 
-  mounted() {},
+  mounted() {
+    this.$store.dispatch("fetchRooms");
+  },
 
   methods: {
     // ...mapMutations(["increaseWeek", "decreaseWeek", "setWeek"]),
