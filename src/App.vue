@@ -1,16 +1,35 @@
 <template>
   <div id="app">
-    <my-component />
+    <NavBar />
   </div>
 </template>
 
 <script>
-import MyComponent from "./components/MyComponent";
+import NavBar from "./components/NavBar.vue";
+
+// import { mapMutations } from "vuex";
 
 export default {
   name: "App",
+  data: () => ({}),
   components: {
-    MyComponent,
+    NavBar,
+  },
+
+  computed: {},
+
+  mounted() {},
+
+  methods: {
+    // ...mapMutations(["increaseWeek", "decreaseWeek", "setWeek"]),
+    // calcWeek() {
+    //   const startWeekDate = getCurrentWeekStartDateMs();
+    //   // const endWeekDate = getEndWeekDate(startWeekDate);
+    //   // const prevWeekDate = new Date(
+    //   //   startWeekDate.getTime() - 7 * 24 * 60 * 60 * 1000
+    //   // );
+    //   console.log(getPrevWeekStartDate(startWeekDate));
+    // },
   },
 };
 </script>
