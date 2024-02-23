@@ -1,5 +1,6 @@
 {
   "name": "test-vue-hotel-booking-calendar",
+  "homepage": "https://chertoha.github.io/test-vue-hotel-booking-calendar",
   "version": "0.1.0",
   "private": true,
   "scripts": {
