@@ -7,14 +7,14 @@
     </div>
 
     <!-- {{ $store.getters.getWeek }} -->
-    {{ week }}
+    <!-- {{ week }} -->
   </div>
 </template>
 
 <script>
 import {
   getCurrentWeekStartDateMs,
-  transformMsToDate,
+  // transformMsToDate,
 } from "@/utils/calculateWeek";
 import { mapMutations } from "vuex";
 
@@ -22,9 +22,9 @@ export default {
   name: "NavBar",
 
   computed: {
-    week() {
-      return transformMsToDate(this.$store.getters.getWeek);
-    },
+    // week() {
+    //   return transformMsToDate(this.$store.getters.getWeek);
+    // },
   },
 
   mounted() {

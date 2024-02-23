@@ -1,11 +1,5 @@
-const dayMs = 24 * 60 * 60 * 1000;
+export const dayMs = 24 * 60 * 60 * 1000;
 export const weekMs = dayMs * 7;
-
-// export const getEndWeekDate = startWeekDate => {
-//   const endWeekDate = new Date();
-//   endWeekDate.setDate(startWeekDate.getDate() + 7);
-//   return endWeekDate;
-// };
 
 export const getCurrentWeekStartDateMs = () => {
   const today = new Date();
@@ -26,12 +20,14 @@ export const getPrevWeekStartDate = currentWeekStart => {
   return new Date(currentWeekStart - weekTimeMs);
 };
 
-// export const getNextWeekStartDate = currentWeekStart => {
-//   return new Date(currentWeekStart + weekMs);
-// };
-
 export const getEndWeekDate = currentWeekStartMs => {
-  const endDate = new Date(currentWeekStartMs + weekMs);
+  const endDate = new Date(currentWeekStartMs + dayMs * 6);
   endDate.setHours(23, 59, 59, 999);
   return endDate;
+};
+
+export const createWeekDaysList = startDateMs => {
+  return Array.from(Array(7)).map(
+    (_, i) => new Date(startDateMs + dayMs * i).toISOString().split("T")[0]
+  );
 };

@@ -2,25 +2,42 @@
   <div id="app">
     <NavBar />
 
-    <div>
+    <!-- <div>
       <p
         v-for="room in rooms"
         :key="room.id"
       >
         <span>{{ room.id }}</span> <span> {{ room.name }}</span>
       </p>
-    </div>
+    </div> -->
 
     {{ week }}
-    {{ bookings }}
+    <!-- {{ bookings }} -->
     <!-- {{ this.$store.getters.getBookings }} -->
+
+    <div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th
+              v-for="day in week"
+              :key="day"
+            >
+              {{ day }}
+            </th>
+          </tr>
+        </thead>
+
+        <tbody></tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
 import NavBar from "./components/NavBar.vue";
-
-// import { mapMutations } from "vuex";
+import { createWeekDaysList } from "./utils/calculateWeek";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
@@ -35,7 +52,7 @@ export default {
     },
 
     week() {
-      return this.$store.getters.getWeek;
+      return createWeekDaysList(this.$store.getters.getWeek);
     },
 
     bookings() {
@@ -44,8 +61,11 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("fetchRooms");
-    this.$store.dispatch("fetchWeekBookings", this.$store.getters.getWeek);
+    // this.$store.dispatch("fetchRooms");
+    // this.$store.dispatch("fetchWeekBookings", this.$store.getters.getWeek);
+
+    this.fetchRooms();
+    this.fetchWeekBookings(this.$store.getters.getWeek);
   },
 
   watch: {
@@ -54,6 +74,7 @@ export default {
 
   methods: {
     // ...mapMutations(["increaseWeek", "decreaseWeek", "setWeek"]),
+    ...mapActions(["fetchRooms", "fetchWeekBookings"]),
 
     updateBookings() {
       this.$store.dispatch("fetchWeekBookings", this.$store.getters.getWeek);
@@ -62,4 +83,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.table {
+  border: 1px solid grey;
+}
+</style>
