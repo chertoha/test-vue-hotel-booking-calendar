@@ -30,7 +30,10 @@
         <div
           v-for="(booking, index) in getBookingsByRoom(room)"
           :key="index"
-          class="book"
+          :class="[
+            'book',
+            { right: new Date(currentWeek) > new Date(booking.start) },
+          ]"
           :style="{
             width: `calc((100% / 7) * ${getDuration(booking.start, booking.end)})`,
             left: `calc(100% / 7 * ${getOffset(
@@ -38,7 +41,10 @@
             )} + (100% / 7) * ${checkInOutTime})`,
           }"
         >
-          <!-- {{ getDuration(booking.start, booking.end) }} -->
+          <span>
+            {{ booking.name }}
+          </span>
+          {{ index }}
         </div>
       </div>
     </div>
@@ -57,10 +63,6 @@ export default {
   name: "RoomTable",
 
   computed: {
-    today() {
-      return transformToISODate(new Date());
-    },
-
     checkInOutTime() {
       return CHECK_IN_OUT_TIME / 24;
     },
@@ -81,6 +83,10 @@ export default {
 
     currentWeek() {
       return this.$store.getters.getWeek;
+    },
+
+    today() {
+      return transformToISODate(new Date());
     },
   },
 
@@ -128,7 +134,7 @@ export default {
   grid-template-columns: 100px 1fr;
 
   width: 100%;
-  min-height: 70px;
+  min-height: 100px;
 }
 
 .grid {
@@ -157,5 +163,13 @@ export default {
   width: 300px;
   height: 40px;
   background-color: tomato;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.right {
+    justify-content: flex-end;
+  }
 }
 </style>
