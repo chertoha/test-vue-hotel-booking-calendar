@@ -72,13 +72,34 @@ export default {
       return this.$store.getters.getRooms;
     },
 
-    week() {
-      return createWeekDaysList(this.$store.getters.getWeek);
-    },
-
     bookings() {
       console.log(this.$store.getters.getBookings);
       return this.$store.getters.getBookings;
+    },
+
+    //   roomWithBookings() {
+    //       const rooms = this.$store.getters.getRooms;
+    //       const bookings = this.$store.getters.getBookings;
+
+    //       return rooms.reduce((room)=>({[room]:  }) ,[])
+
+    //     /*
+    //     [
+    //         {
+    //             room: roomName,
+    //             booking: [
+    //                 {id:1 , name: 1},
+    //                 {id:2 , name: 2}
+    //             ]
+    //         }
+    //     ]
+
+    //     */
+
+    //   }
+
+    week() {
+      return createWeekDaysList(this.$store.getters.getWeek);
     },
 
     currentWeek() {
