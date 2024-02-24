@@ -33,9 +33,9 @@
       <div
         class="row"
         v-for="room in rooms"
-        :key="room.id"
+        :key="room"
       >
-        <div class="col">{{ room.name }}</div>
+        <div class="col">{{ room }}</div>
         <div class="grid">
           <div
             class="cell"
@@ -44,7 +44,7 @@
           ></div>
 
           <div
-            v-for="(booking, index) in getBookingsByRoom(room.id)"
+            v-for="(booking, index) in getBookingsByRoom(room)"
             :key="index"
             class="book"
             :style="{
@@ -71,29 +71,7 @@ import { CHECK_IN_OUT_TIME } from "@/utils/config";
 
 export default {
   name: "App",
-  data: () => ({
-    // booking: {
-    //   id: 976775,
-    //   name: "Zolly Feasby",
-    //   phone: "884-184-7013",
-    //   email: "zfeasby27@last.fm",
-    //   typeOfApartments: "חדר יחיד",
-    //   guestInfo: {
-    //     adults: 7,
-    //     children: 6,
-    //   },
-    //   start: "2024-02-18",
-    //   duration: 8,
-    //   timed: true,
-    //   height: 39,
-    //   type: "unavailable",
-    //   roomDetails: {
-    //     id: 4,
-    //     name: "Superior Room",
-    //   },
-    //   end: "2024-02-23",
-    // },
-  }),
+  data: () => ({}),
   components: {
     NavBar,
   },
@@ -104,6 +82,7 @@ export default {
     },
 
     rooms() {
+      // console.log(this.$store.getters.getRooms);
       return this.$store.getters.getRooms;
     },
 
@@ -112,7 +91,7 @@ export default {
     },
 
     bookings() {
-      // console.log(this.$store.getters.getBookings);
+      console.log(this.$store.getters.getBookings);
       return this.$store.getters.getBookings;
     },
 
@@ -150,11 +129,9 @@ export default {
       return offset;
     },
 
-    getBookingsByRoom(roomId) {
-      console.log(roomId);
-
+    getBookingsByRoom(roomName) {
       return this.bookings.filter(({ roomDetails }) => {
-        return roomDetails.id.toString() === roomId.toString();
+        return roomDetails.name === roomName;
       });
     },
   },

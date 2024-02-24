@@ -2,20 +2,26 @@ import bookings from "@/data/bookings.json";
 import { getEndWeekDate, transformMsToDate } from "@/utils/calculateWeek";
 
 export const getRoomsFromBookings = () => {
-  const roomsObject = bookings.reduce(
-    (rooms, { roomDetails: { id, name } }) => {
-      return {
-        ...rooms,
-        [id]: name,
-      };
-    },
-    {}
-  );
+  const roomsSet = new Set();
 
-  return Object.keys(roomsObject).map(id => ({
-    id,
-    name: roomsObject[id],
-  }));
+  bookings.forEach(({ roomDetails: { name } }) => roomsSet.add(name));
+
+  return [...roomsSet];
+
+  // const roomsObject = bookings.reduce(
+  //   (rooms, { roomDetails: { id, name } }) => {
+  //     return {
+  //       ...rooms,
+  //       [id]: name,
+  //     };
+  //   },
+  //   {}
+  // );
+
+  // return Object.keys(roomsObject).map(id => ({
+  //   id,
+  //   name: roomsObject[id],
+  // }));
 };
 
 export const getBookingsbyWeek = startWeekDateMs => {
