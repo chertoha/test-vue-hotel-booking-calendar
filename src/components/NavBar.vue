@@ -21,11 +21,7 @@ import { mapMutations } from "vuex";
 export default {
   name: "NavBar",
 
-  computed: {
-    // week() {
-    //   return transformMsToDate(this.$store.getters.getWeek);
-    // },
-  },
+  computed: {},
 
   mounted() {
     // this.setCurrentWeek();

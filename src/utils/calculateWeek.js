@@ -31,3 +31,11 @@ export const createWeekDaysList = startDateMs => {
     (_, i) => new Date(startDateMs + dayMs * i).toISOString().split("T")[0]
   );
 };
+
+export const createDateMs = dateString => {
+  return new Date(dateString).getTime();
+};
+
+// export const getDaysDuration = (start, end) => {
+
+// }
