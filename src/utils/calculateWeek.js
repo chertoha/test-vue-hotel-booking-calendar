@@ -26,6 +26,10 @@ export const getEndWeekDate = currentWeekStartMs => {
   return endDate;
 };
 
+export const transformToISODate = ms => {
+  return new Date(ms).toISOString().split("T")[0];
+};
+
 export const createWeekDaysList = startDateMs => {
   return Array.from(Array(7)).map(
     (_, i) => new Date(startDateMs + dayMs * i).toISOString().split("T")[0]
