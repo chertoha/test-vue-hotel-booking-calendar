@@ -11,25 +11,40 @@
       </p>
     </div> -->
 
-    {{ week }}
+    <!-- {{ week }} -->
     <!-- {{ bookings }} -->
     <!-- {{ this.$store.getters.getBookings }} -->
 
-    <div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th
-              v-for="day in week"
-              :key="day"
-            >
-              {{ day }}
-            </th>
-          </tr>
-        </thead>
+    <div class="grid-component">
+      <div class="row">
+        <div class="col">col</div>
+        <div class="grid">
+          <div
+            class="cell"
+            v-for="day in week"
+            :key="day"
+          >
+            {{ day }}
+          </div>
+        </div>
+      </div>
 
-        <tbody></tbody>
-      </table>
+      <div
+        class="row"
+        v-for="room in rooms"
+        :key="room.id"
+      >
+        <div class="col">{{ room.name }}</div>
+        <div class="grid">
+          <div
+            class="cell"
+            v-for="day in week"
+            :key="day"
+          ></div>
+
+          <div class="book"></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -83,8 +98,35 @@ export default {
 };
 </script>
 
-<style>
-.table {
-  border: 1px solid grey;
+<style lang="scss">
+.row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+
+  width: 100%;
+  min-height: 70px;
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.col {
+  border: 1px solid gray;
+}
+
+.cell {
+  border: 1px solid gray;
+}
+
+.book {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  height: 40px;
+  background-color: tomato;
 }
 </style>
