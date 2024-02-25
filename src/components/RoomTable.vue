@@ -39,40 +39,24 @@
       </div>
     </div>
 
-    <!-- <div
-      v-if="isPopupOpen"
-      class="backdrop"
-      @click="closePopup"
-    > -->
-    <div
-      class="popup"
-      v-if="isPopupOpen"
-      :style="{
-        left: `${popupCoords.x}px`,
-        top: `${popupCoords.y}px`,
-        transform: `${popupCoords.left ? 'translateX(0)' : 'translateX(-100%)'} ${
-          popupCoords.top ? 'translateY(0)' : 'translateY(-100%)'
-        }`,
-      }"
-    >
-      {{ currentBooking }}
-    </div>
+    <PopUp
+      :openedBooking="openedBooking"
+      :isPopupOpen="isPopupOpen"
+      :popupCoords="popupCoords"
+      :onClose="closePopup"
+    />
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
-import {
-  createWeekDaysList,
-  // dayMs,
-  transformToISODate,
-  // weekMs,
-} from "@/utils/calculateWeek";
+import { createWeekDaysList, transformToISODate } from "@/utils/calculateWeek";
 import { mapActions } from "vuex";
-// import { CHECK_IN_OUT_TIME } from "@/utils/config";
 import BookingBar from "./BookingBar.vue";
+import PopUp from "./PopUp.vue";
+import { calcPopupPosition } from "@/utils/calcPopupPosition";
+
 export default {
-  components: { BookingBar },
+  components: { BookingBar, PopUp },
 
   name: "RoomTable",
 
@@ -90,7 +74,7 @@ export default {
   },
 
   computed: {
-    //Refactor needed
+    //Refactor needed !!!
     roomWithBookings() {
       const rooms = this.$store.getters.getRooms;
       const bookings = this.$store.getters.getBookings;
@@ -115,8 +99,6 @@ export default {
         }
         arr.push(obj);
       });
-      // console.log("bookings", bookings);
-      // console.log(arr);
       return arr;
     },
 
@@ -134,7 +116,7 @@ export default {
     this.fetchWeekBookings(this.$store.getters.getWeek);
 
     window.addEventListener("click", e => {
-      if (!e.target.closest(".book")) {
+      if (!e.target.closest(".book, .popup")) {
         this.isPopupOpen = false;
       }
     });
@@ -163,22 +145,13 @@ export default {
     ...mapActions(["fetchRooms", "fetchWeekBookings"]),
 
     openPopup({ event, booking }) {
-      const x = event.clientX;
-      const y = event.clientY;
-
-      const left = x <= window.innerWidth / 2;
-      const top = y <= window.innerHeight / 2;
-
-      this.popupCoords = { x, y, left, top };
-
-      this.currentBooking = {};
+      this.popupCoords = { ...calcPopupPosition(event.clientX, event.clientY) };
+      this.openedBooking = {};
 
       this.isPopupOpen = false;
-      this.currentBooking = booking;
+      this.openedBooking = booking;
 
       this.isPopupOpen = true;
-
-      // console.log(this.currentBooking);
     },
 
     updateBookings() {
@@ -223,25 +196,5 @@ export default {
   &.today {
     background-color: rgb(204, 239, 204);
   }
-}
-
-.backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* pointer-events: none; */
-}
-
-.popup {
-  position: fixed;
-  width: 200px;
-  height: 300px;
-
-  left: 0;
-  top: 0;
-
-  background-color: tomato;
 }
 </style>
