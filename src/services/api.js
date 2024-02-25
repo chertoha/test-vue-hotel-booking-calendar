@@ -1,5 +1,5 @@
-// import bookings from "@/data/bookings.json";
-import bookings from "@/data/testBookings.json";
+import bookings from "@/data/bookings.json";
+// import bookings from "@/data/testBookings.json";
 import { getEndWeekDate, transformMsToDate } from "@/utils/calculateWeek";
 
 export const getRoomsFromBookings = () => {

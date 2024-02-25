@@ -34,16 +34,20 @@
           :class="['book']"
           :style="{
             width: `calc((100% / 7) * ${getDuration(booking.start, booking.end)})`,
+
             left: `calc(100% / 7 * ${getOffset(
               booking.start
             )} + (100% / 7) * ${checkInOutTime})`,
-            bottom: `calc(100px * ${index})`,
+
+            bottom: booking.isOverlapped && `calc(100px * ${index})`,
+
             paddingLeft:
               getOffset(booking.start) < 0
                 ? `calc(100% / 7 * ${
                     getOffset(booking.start) * -1
                   } - (100% / 7) * ${checkInOutTime})`
                 : `20px`,
+
             paddingRight:
               getEndOffset(booking.end) < 0
                 ? `calc(100% / 7 * ${
@@ -74,6 +78,10 @@ import { CHECK_IN_OUT_TIME } from "@/utils/config";
 export default {
   name: "RoomTable",
 
+  data: () => {
+    return {};
+  },
+
   computed: {
     checkInOutTime() {
       return CHECK_IN_OUT_TIME / 24;
@@ -85,10 +93,11 @@ export default {
     },
 
     bookings() {
-      console.log(this.$store.getters.getBookings);
+      // console.log(this.$store.getters.getBookings);
       return this.$store.getters.getBookings;
     },
 
+    //Refactor needed
     roomWithBookings() {
       const rooms = this.$store.getters.getRooms;
       const bookings = this.$store.getters.getBookings;
@@ -100,15 +109,28 @@ export default {
 
         for (let i = 0; i < bookings.length; i++) {
           if (bookings[i].roomDetails.name === room) {
-            obj.bookings.push(bookings[i]);
+            obj.bookings.push({ isOverlapped: false, ...bookings[i] });
           }
+        }
+
+        if (obj.bookings.length > 1) {
+          obj.bookings.forEach((booking, i, arr) => {
+            for (let j = 0; j < arr.length; j++) {
+              if (i === j) continue;
+              if (booking.start >= arr[j].end) continue;
+              if (booking.end <= arr[j].start) continue;
+              booking.isOverlapped = true;
+            }
+          });
+
+          obj.bookings.sort(({ isOverlapped }) => isOverlapped && -1);
         }
 
         arr.push(obj);
       });
 
       // console.log("bookings", bookings);
-      // console.log(arr);
+      console.log(arr);
       return arr;
     },
 
@@ -150,7 +172,6 @@ export default {
     },
 
     getOffset(start) {
-      console.log(start);
       const startDateMs = new Date(start).getTime();
       const offset = (startDateMs - this.$store.getters.getWeek) / dayMs;
       // console.log(this.$store.getters.getWeek);

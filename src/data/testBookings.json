@@ -166,5 +166,47 @@
       "name": "Test Room"
     },
     "end": "2024-02-26"
+  },
+  {
+    "id": 84670634,
+    "name": "Codie3 Janaway32",
+    "phone": "498-532-4000",
+    "email": "cjanaway6@google.cn",
+    "typeOfApartments": "חדר יחיד",
+    "guestInfo": {
+      "adults": 0,
+      "children": 7
+    },
+    "start": "2024-02-21",
+    "duration": 4,
+    "timed": true,
+    "height": 58,
+    "type": "available",
+    "roomDetails": {
+      "id": 1,
+      "name": "Premier Suite"
+    },
+    "end": "2024-02-24"
+  },
+  {
+    "id": 84670632344,
+    "name": "Codie3sasss Janaway32",
+    "phone": "498-532-4000",
+    "email": "cjanaway6@google.cn",
+    "typeOfApartments": "חדר יחיד",
+    "guestInfo": {
+      "adults": 0,
+      "children": 7
+    },
+    "start": "2024-02-20",
+    "duration": 4,
+    "timed": true,
+    "height": 58,
+    "type": "available",
+    "roomDetails": {
+      "id": 1,
+      "name": "Premier Suite"
+    },
+    "end": "2024-02-21"
   }
 ]
