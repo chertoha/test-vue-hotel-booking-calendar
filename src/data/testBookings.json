@@ -1,0 +1,170 @@
+[
+  {
+    "id": 77072,
+    "name": "Barnebas Pfeffle",
+    "phone": "866-159-8491",
+    "email": "bpfeffle0@squidoo.com",
+    "typeOfApartments": "חדר זוגי",
+    "guestInfo": {
+      "adults": 10,
+      "children": 10
+    },
+    "start": "2024-02-16",
+    "duration": 8,
+    "timed": false,
+    "height": 69,
+    "type": "booked",
+    "roomDetails": {
+      "id": 2,
+      "name": "Premier Suite"
+    },
+    "end": "2024-02-21"
+  },
+  {
+    "id": 27514,
+    "name": "Cobbie Pordall",
+    "phone": "295-288-5460",
+    "email": "cpordall1@wordpress.org",
+    "typeOfApartments": "חדר זוגי",
+    "guestInfo": {
+      "adults": 6,
+      "children": 0
+    },
+    "start": "2024-02-23",
+    "duration": 9,
+    "timed": true,
+    "height": 37,
+    "type": "available",
+    "roomDetails": {
+      "id": 1,
+      "name": "Superior Room"
+    },
+    "end": "2024-02-24"
+  },
+  {
+    "id": 384733,
+    "name": "Josephina Sooper",
+    "phone": "345-362-5902",
+    "email": "jsooper2@rambler.ru",
+    "typeOfApartments": "חדר זוגי",
+    "guestInfo": {
+      "adults": 2,
+      "children": 7
+    },
+    "start": "2024-02-17",
+    "duration": 8,
+    "timed": false,
+    "height": 99,
+    "type": "available",
+    "roomDetails": {
+      "id": 5,
+      "name": "Grand Executive"
+    },
+    "end": "2024-02-22"
+  },
+  {
+    "id": 554481,
+    "name": "Brice Ellissen",
+    "phone": "921-303-8881",
+    "email": "bellissen3@yandex.ru",
+    "typeOfApartments": "דירת נופש",
+    "guestInfo": {
+      "adults": 9,
+      "children": 6
+    },
+    "start": "2024-02-17",
+    "duration": 7,
+    "timed": true,
+    "height": 44,
+    "type": "available",
+    "roomDetails": {
+      "id": 4,
+      "name": "Grand Executive"
+    },
+    "end": "2024-02-23"
+  },
+  {
+    "id": 18374,
+    "name": "Lemmie Isaak",
+    "phone": "720-568-1938",
+    "email": "lisaak4@plala.or.jp",
+    "typeOfApartments": "דירת נופש",
+    "guestInfo": {
+      "adults": 4,
+      "children": 4
+    },
+    "start": "2024-02-18",
+    "duration": 6,
+    "timed": false,
+    "height": 46,
+    "type": "available",
+    "roomDetails": {
+      "id": 6,
+      "name": "Suite Classic Room"
+    },
+    "end": "2024-02-20"
+  },
+  {
+    "id": 113928,
+    "name": "Jeromy Labden",
+    "phone": "600-691-5216",
+    "email": "jlabden5@ft.com",
+    "typeOfApartments": "חדר יחיד",
+    "guestInfo": {
+      "adults": 4,
+      "children": 4
+    },
+    "start": "2024-02-22",
+    "duration": 7,
+    "timed": false,
+    "height": 16,
+    "type": "available",
+    "roomDetails": {
+      "id": 2,
+      "name": "Presidential Suite"
+    },
+    "end": "2023-12-29"
+  },
+  {
+    "id": 840634,
+    "name": "Codie Janaway",
+    "phone": "498-532-4000",
+    "email": "cjanaway6@google.cn",
+    "typeOfApartments": "חדר יחיד",
+    "guestInfo": {
+      "adults": 0,
+      "children": 7
+    },
+    "start": "2024-02-15",
+    "duration": 4,
+    "timed": true,
+    "height": 58,
+    "type": "available",
+    "roomDetails": {
+      "id": 1,
+      "name": "Elegant Suite"
+    },
+    "end": "2024-02-28"
+  },
+  {
+    "id": 84670634,
+    "name": "Codie2 Janaway2",
+    "phone": "498-532-4000",
+    "email": "cjanaway6@google.cn",
+    "typeOfApartments": "חדר יחיד",
+    "guestInfo": {
+      "adults": 0,
+      "children": 7
+    },
+    "start": "2024-02-22",
+    "duration": 4,
+    "timed": true,
+    "height": 58,
+    "type": "available",
+    "roomDetails": {
+      "id": 1,
+      "name": "Test Room"
+    },
+    "end": "2024-02-26"
+  }
+]

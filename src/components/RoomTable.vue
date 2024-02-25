@@ -31,62 +31,34 @@
         <div
           v-for="(booking, index) in bookings"
           :key="booking.name"
-          :class="[
-            'book',
-            { right: new Date(currentWeek) > new Date(booking.start) },
-            { left: new Date(currentWeek) < new Date(booking.end) },
-          ]"
+          :class="['book']"
           :style="{
             width: `calc((100% / 7) * ${getDuration(booking.start, booking.end)})`,
             left: `calc(100% / 7 * ${getOffset(
               booking.start
             )} + (100% / 7) * ${checkInOutTime})`,
             bottom: `calc(100px * ${index})`,
+            paddingLeft:
+              getOffset(booking.start) < 0
+                ? `calc(100% / 7 * ${
+                    getOffset(booking.start) * -1
+                  } - (100% / 7) * ${checkInOutTime})`
+                : `20px`,
+            paddingRight:
+              getEndOffset(booking.end) < 0
+                ? `calc(100% / 7 * ${
+                    getEndOffset(booking.end) * -1
+                  } + (100% / 7) * ${checkInOutTime})`
+                : `20px`,
           }"
         >
           <span>
             {{ booking.name }}
           </span>
-          {{ index }}
+          <!-- {{ index }} -->
         </div>
       </div>
     </div>
-
-    <!-- <div
-      class="row"
-      v-for="room in rooms"
-      :key="room"
-    >
-      <div class="col">{{ room }}</div>
-      <div class="grid">
-        <div
-          :class="['cell', { today: day === today }]"
-          class="cell"
-          v-for="day in week"
-          :key="day"
-        ></div>
-
-        <div
-          v-for="(booking, index) in getBookingsByRoom(room)"
-          :key="index"
-          :class="[
-            'book',
-            { right: new Date(currentWeek) > new Date(booking.start) },
-          ]"
-          :style="{
-            width: `calc((100% / 7) * ${getDuration(booking.start, booking.end)})`,
-            left: `calc(100% / 7 * ${getOffset(
-              booking.start
-            )} + (100% / 7) * ${checkInOutTime})`,
-          }"
-        >
-          <span>
-            {{ booking.name }}
-          </span>
-          {{ index }}
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -95,6 +67,7 @@ import {
   createWeekDaysList,
   dayMs,
   transformToISODate,
+  weekMs,
 } from "@/utils/calculateWeek";
 import { mapActions } from "vuex";
 import { CHECK_IN_OUT_TIME } from "@/utils/config";
@@ -134,22 +107,9 @@ export default {
         arr.push(obj);
       });
 
-      console.log("bookings", bookings);
-      console.log(arr);
+      // console.log("bookings", bookings);
+      // console.log(arr);
       return arr;
-
-      /*
-        [
-            {
-                room: roomName,
-                booking: [
-                    {id:1 , name: 1},
-                    {id:2 , name: 2}
-                ]
-            }
-        ]
-
-        */
     },
 
     week() {
@@ -157,6 +117,7 @@ export default {
     },
 
     currentWeek() {
+      // console.log(this.$store.getters.getWeek);
       return this.$store.getters.getWeek;
     },
 
@@ -189,8 +150,17 @@ export default {
     },
 
     getOffset(start) {
+      console.log(start);
       const startDateMs = new Date(start).getTime();
-      const offset = (startDateMs - this.currentWeek) / dayMs;
+      const offset = (startDateMs - this.$store.getters.getWeek) / dayMs;
+      // console.log(this.$store.getters.getWeek);
+      return offset;
+    },
+
+    getEndOffset(end) {
+      const endDateMs = new Date(end).getTime();
+      const offset = (this.$store.getters.getWeek + weekMs - endDateMs) / dayMs;
+      // console.log(this.$store.getters.getWeek);
       return offset;
     },
 
@@ -236,7 +206,11 @@ export default {
 }
 
 .book {
+  box-sizing: border-box;
   position: absolute;
+  /* padding-left: 300px; */
+  /* padding-left: 20px; */
+  /* padding-right: 20px; */
   left: 0;
   bottom: 0;
   width: 300px;
