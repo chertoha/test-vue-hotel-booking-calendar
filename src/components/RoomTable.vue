@@ -242,6 +242,9 @@ export default {
   align-items: center;
   justify-content: center;
 
+  border-radius: 15px;
+  border-right: 3px solid white;
+
   &.right {
     justify-content: flex-end;
   }
