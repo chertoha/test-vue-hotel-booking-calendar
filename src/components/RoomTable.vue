@@ -28,7 +28,15 @@
           :key="day"
         ></div>
 
-        <div
+        <!--  -->
+        <BookingBar
+          v-for="(booking, index) in bookings"
+          :key="booking.name"
+          :booking="booking"
+          :index="index"
+        />
+        <!--  -->
+        <!-- <div
           v-for="(booking, index) in bookings"
           :key="booking.name"
           :class="['book']"
@@ -59,8 +67,7 @@
           <span>
             {{ booking.name }}
           </span>
-          <!-- {{ index }} -->
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -69,50 +76,45 @@
 <script>
 import {
   createWeekDaysList,
-  dayMs,
+  // dayMs,
   transformToISODate,
-  weekMs,
+  // weekMs,
 } from "@/utils/calculateWeek";
 import { mapActions } from "vuex";
-import { CHECK_IN_OUT_TIME } from "@/utils/config";
+// import { CHECK_IN_OUT_TIME } from "@/utils/config";
+import BookingBar from "./BookingBar.vue";
 export default {
+  components: { BookingBar },
+
   name: "RoomTable",
 
-  data: () => {
-    return {};
-  },
-
   computed: {
-    checkInOutTime() {
-      return CHECK_IN_OUT_TIME / 24;
-    },
+    // checkInOutTime() {
+    //   return CHECK_IN_OUT_TIME / 24;
+    // },
 
-    rooms() {
-      // console.log(this.$store.getters.getRooms);
-      return this.$store.getters.getRooms;
-    },
+    // rooms() {
+    //   // console.log(this.$store.getters.getRooms);
+    //   return this.$store.getters.getRooms;
+    // },
 
-    bookings() {
-      // console.log(this.$store.getters.getBookings);
-      return this.$store.getters.getBookings;
-    },
+    // bookings() {
+    //   // console.log(this.$store.getters.getBookings);
+    //   return this.$store.getters.getBookings;
+    // },
 
     //Refactor needed
     roomWithBookings() {
       const rooms = this.$store.getters.getRooms;
       const bookings = this.$store.getters.getBookings;
-
       const arr = [];
-
       rooms.forEach(room => {
         const obj = { room, bookings: [] };
-
         for (let i = 0; i < bookings.length; i++) {
           if (bookings[i].roomDetails.name === room) {
             obj.bookings.push({ isOverlapped: false, ...bookings[i] });
           }
         }
-
         if (obj.bookings.length > 1) {
           obj.bookings.forEach((booking, i, arr) => {
             for (let j = 0; j < arr.length; j++) {
@@ -122,13 +124,10 @@ export default {
               booking.isOverlapped = true;
             }
           });
-
           obj.bookings.sort(({ isOverlapped }) => isOverlapped && -1);
         }
-
         arr.push(obj);
       });
-
       // console.log("bookings", bookings);
       console.log(arr);
       return arr;
@@ -138,10 +137,10 @@ export default {
       return createWeekDaysList(this.$store.getters.getWeek);
     },
 
-    currentWeek() {
-      // console.log(this.$store.getters.getWeek);
-      return this.$store.getters.getWeek;
-    },
+    // currentWeek() {
+    //   // console.log(this.$store.getters.getWeek);
+    //   return this.$store.getters.getWeek;
+    // },
 
     today() {
       return transformToISODate(new Date());
@@ -164,32 +163,31 @@ export default {
       this.$store.dispatch("fetchWeekBookings", this.$store.getters.getWeek);
     },
 
-    getDuration(start, end) {
-      const startDateMs = new Date(start).getTime();
-      const endDateMs = new Date(end).getTime();
+    // getDuration(start, end) {
+    //   const startDateMs = new Date(start).getTime();
+    //   const endDateMs = new Date(end).getTime();
+    //   return (endDateMs - startDateMs) / dayMs;
+    // },
 
-      return (endDateMs - startDateMs) / dayMs;
-    },
+    // getOffset(start) {
+    //   const startDateMs = new Date(start).getTime();
+    //   const offset = (startDateMs - this.$store.getters.getWeek) / dayMs;
+    //   // console.log(this.$store.getters.getWeek);
+    //   return offset;
+    // },
 
-    getOffset(start) {
-      const startDateMs = new Date(start).getTime();
-      const offset = (startDateMs - this.$store.getters.getWeek) / dayMs;
-      // console.log(this.$store.getters.getWeek);
-      return offset;
-    },
+    // getEndOffset(end) {
+    //   const endDateMs = new Date(end).getTime();
+    //   const offset = (this.$store.getters.getWeek + weekMs - endDateMs) / dayMs;
+    //   // console.log(this.$store.getters.getWeek);
+    //   return offset;
+    // },
 
-    getEndOffset(end) {
-      const endDateMs = new Date(end).getTime();
-      const offset = (this.$store.getters.getWeek + weekMs - endDateMs) / dayMs;
-      // console.log(this.$store.getters.getWeek);
-      return offset;
-    },
-
-    getBookingsByRoom(roomName) {
-      return this.bookings.filter(({ roomDetails }) => {
-        return roomDetails.name === roomName;
-      });
-    },
+    // getBookingsByRoom(roomName) {
+    //   return this.bookings.filter(({ roomDetails }) => {
+    //     return roomDetails.name === roomName;
+    //   });
+    // },
   },
 };
 </script>
@@ -198,9 +196,7 @@ export default {
 .row {
   display: grid;
   grid-template-columns: 100px 1fr;
-
   width: 100%;
-  /* min-height: 100px; */
 }
 
 .tab-row {
@@ -226,24 +222,24 @@ export default {
   }
 }
 
-.book {
+/* .book {
   box-sizing: border-box;
   position: absolute;
-  /* padding-left: 300px; */
-  /* padding-left: 20px; */
-  /* padding-right: 20px; */
+
   left: 0;
   bottom: 0;
   width: 300px;
   height: 70px;
-  background-color: tomato;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  font-size: 20px;
+
   border-radius: 15px;
   border-right: 3px solid white;
+  background-color: rgb(41, 131, 249);
 
   &.right {
     justify-content: flex-end;
@@ -252,5 +248,5 @@ export default {
   &.left {
     justify-content: flex-start;
   }
-}
+} */
 </style>
