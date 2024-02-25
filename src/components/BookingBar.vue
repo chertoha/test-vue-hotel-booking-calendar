@@ -1,4 +1,5 @@
 <template>
+  <!-- <div> -->
   <div
     :class="['book']"
     :style="{
@@ -28,7 +29,11 @@
     <span>
       {{ booking.name }}
     </span>
+
+    <!-- <div class="popup"></div> -->
   </div>
+
+  <!-- </div> -->
 </template>
 
 <script>
@@ -101,5 +106,16 @@ export default {
   &.left {
     justify-content: flex-start;
   }
+}
+
+.popup {
+  position: absolute;
+  width: 200px;
+  height: 300px;
+
+  left: 0;
+  top: 0;
+
+  background-color: tomato;
 }
 </style>

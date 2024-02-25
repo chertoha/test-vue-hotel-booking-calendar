@@ -16,7 +16,7 @@
     <div
       v-for="{ room, bookings } in roomWithBookings"
       class="row tab-row"
-      :style="{ height: `calc(100px * ${bookings.length})` }"
+      :style="{ height: `calc(100px * ${countOverlappedBookings(bookings)})` }"
       :key="room"
     >
       <div class="col">{{ room }}</div>
@@ -163,6 +163,13 @@ export default {
       this.$store.dispatch("fetchWeekBookings", this.$store.getters.getWeek);
     },
 
+    countOverlappedBookings(bookings) {
+      return bookings.reduce(
+        (count, { isOverlapped }) => (count += isOverlapped ? 1 : 0),
+        0
+      );
+    },
+
     // getDuration(start, end) {
     //   const startDateMs = new Date(start).getTime();
     //   const endDateMs = new Date(end).getTime();
@@ -192,7 +199,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .row {
   display: grid;
   grid-template-columns: 100px 1fr;
