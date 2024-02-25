@@ -14,6 +14,45 @@
     </div>
 
     <div
+      v-for="{ room, bookings } in roomWithBookings"
+      class="row tab-row"
+      :style="{ height: `calc(100px * ${bookings.length})` }"
+      :key="room"
+    >
+      <div class="col">{{ room }}</div>
+      <div class="grid">
+        <div
+          :class="['cell', { today: day === today }]"
+          class="cell"
+          v-for="day in week"
+          :key="day"
+        ></div>
+
+        <div
+          v-for="(booking, index) in bookings"
+          :key="booking.name"
+          :class="[
+            'book',
+            { right: new Date(currentWeek) > new Date(booking.start) },
+            { left: new Date(currentWeek) < new Date(booking.end) },
+          ]"
+          :style="{
+            width: `calc((100% / 7) * ${getDuration(booking.start, booking.end)})`,
+            left: `calc(100% / 7 * ${getOffset(
+              booking.start
+            )} + (100% / 7) * ${checkInOutTime})`,
+            bottom: `calc(100px * ${index})`,
+          }"
+        >
+          <span>
+            {{ booking.name }}
+          </span>
+          {{ index }}
+        </div>
+      </div>
+    </div>
+
+    <!-- <div
       class="row"
       v-for="room in rooms"
       :key="room"
@@ -47,7 +86,7 @@
           {{ index }}
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -77,26 +116,41 @@ export default {
       return this.$store.getters.getBookings;
     },
 
-    //   roomWithBookings() {
-    //       const rooms = this.$store.getters.getRooms;
-    //       const bookings = this.$store.getters.getBookings;
+    roomWithBookings() {
+      const rooms = this.$store.getters.getRooms;
+      const bookings = this.$store.getters.getBookings;
 
-    //       return rooms.reduce((room)=>({[room]:  }) ,[])
+      const arr = [];
 
-    //     /*
-    //     [
-    //         {
-    //             room: roomName,
-    //             booking: [
-    //                 {id:1 , name: 1},
-    //                 {id:2 , name: 2}
-    //             ]
-    //         }
-    //     ]
+      rooms.forEach(room => {
+        const obj = { room, bookings: [] };
 
-    //     */
+        for (let i = 0; i < bookings.length; i++) {
+          if (bookings[i].roomDetails.name === room) {
+            obj.bookings.push(bookings[i]);
+          }
+        }
 
-    //   }
+        arr.push(obj);
+      });
+
+      console.log("bookings", bookings);
+      console.log(arr);
+      return arr;
+
+      /*
+        [
+            {
+                room: roomName,
+                booking: [
+                    {id:1 , name: 1},
+                    {id:2 , name: 2}
+                ]
+            }
+        ]
+
+        */
+    },
 
     week() {
       return createWeekDaysList(this.$store.getters.getWeek);
@@ -155,6 +209,10 @@ export default {
   grid-template-columns: 100px 1fr;
 
   width: 100%;
+  /* min-height: 100px; */
+}
+
+.tab-row {
   min-height: 100px;
 }
 
@@ -182,7 +240,7 @@ export default {
   left: 0;
   bottom: 0;
   width: 300px;
-  height: 40px;
+  height: 70px;
   background-color: tomato;
 
   display: flex;
@@ -191,6 +249,10 @@ export default {
 
   &.right {
     justify-content: flex-end;
+  }
+
+  &.left {
+    justify-content: flex-start;
   }
 }
 </style>
