@@ -1,6 +1,7 @@
 <template>
   <!-- <div> -->
   <div
+    @click="$emit('emitPopup', booking)"
     :class="['book']"
     :style="{
       width: `calc((100% / 7) * ${getDuration(booking.start, booking.end)})`,
@@ -29,8 +30,6 @@
     <span>
       {{ booking.name }}
     </span>
-
-    <!-- <div class="popup"></div> -->
   </div>
 
   <!-- </div> -->
@@ -75,6 +74,10 @@ export default {
       const offset = (this.$store.getters.getWeek + weekMs - endDateMs) / dayMs;
       return offset;
     },
+
+    // emitOpenPopup() {
+    //   this.$emit("emitOpenPopup");
+    // },
   },
 };
 </script>
@@ -106,16 +109,5 @@ export default {
   &.left {
     justify-content: flex-start;
   }
-}
-
-.popup {
-  position: absolute;
-  width: 200px;
-  height: 300px;
-
-  left: 0;
-  top: 0;
-
-  background-color: tomato;
 }
 </style>

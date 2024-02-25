@@ -30,44 +30,22 @@
 
         <!--  -->
         <BookingBar
+          @emitPopup="openPopup"
           v-for="(booking, index) in bookings"
           :key="booking.name"
           :booking="booking"
           :index="index"
         />
-        <!--  -->
-        <!-- <div
-          v-for="(booking, index) in bookings"
-          :key="booking.name"
-          :class="['book']"
-          :style="{
-            width: `calc((100% / 7) * ${getDuration(booking.start, booking.end)})`,
+      </div>
+    </div>
 
-            left: `calc(100% / 7 * ${getOffset(
-              booking.start
-            )} + (100% / 7) * ${checkInOutTime})`,
-
-            bottom: booking.isOverlapped && `calc(100px * ${index})`,
-
-            paddingLeft:
-              getOffset(booking.start) < 0
-                ? `calc(100% / 7 * ${
-                    getOffset(booking.start) * -1
-                  } - (100% / 7) * ${checkInOutTime})`
-                : `20px`,
-
-            paddingRight:
-              getEndOffset(booking.end) < 0
-                ? `calc(100% / 7 * ${
-                    getEndOffset(booking.end) * -1
-                  } + (100% / 7) * ${checkInOutTime})`
-                : `20px`,
-          }"
-        >
-          <span>
-            {{ booking.name }}
-          </span>
-        </div> -->
+    <div
+      v-if="isPopupOpen"
+      class="backdrop"
+      @click="closePopup"
+    >
+      <div class="popup">
+        {{ currentBooking }}
       </div>
     </div>
   </div>
@@ -88,21 +66,14 @@ export default {
 
   name: "RoomTable",
 
+  data() {
+    return {
+      isPopupOpen: false,
+      openedBooking: {},
+    };
+  },
+
   computed: {
-    // checkInOutTime() {
-    //   return CHECK_IN_OUT_TIME / 24;
-    // },
-
-    // rooms() {
-    //   // console.log(this.$store.getters.getRooms);
-    //   return this.$store.getters.getRooms;
-    // },
-
-    // bookings() {
-    //   // console.log(this.$store.getters.getBookings);
-    //   return this.$store.getters.getBookings;
-    // },
-
     //Refactor needed
     roomWithBookings() {
       const rooms = this.$store.getters.getRooms;
@@ -129,18 +100,13 @@ export default {
         arr.push(obj);
       });
       // console.log("bookings", bookings);
-      console.log(arr);
+      // console.log(arr);
       return arr;
     },
 
     week() {
       return createWeekDaysList(this.$store.getters.getWeek);
     },
-
-    // currentWeek() {
-    //   // console.log(this.$store.getters.getWeek);
-    //   return this.$store.getters.getWeek;
-    // },
 
     today() {
       return transformToISODate(new Date());
@@ -152,12 +118,29 @@ export default {
     this.fetchWeekBookings(this.$store.getters.getWeek);
   },
 
+  beforeDestroy() {},
+
   watch: {
     week: "updateBookings",
   },
 
   methods: {
+    closePopup() {
+      this.isPopupOpen = false;
+    },
+
     ...mapActions(["fetchRooms", "fetchWeekBookings"]),
+
+    openPopup(booking) {
+      this.currentBooking = {};
+
+      this.isPopupOpen = false;
+      this.currentBooking = booking;
+
+      this.isPopupOpen = true;
+
+      // console.log(this.currentBooking);
+    },
 
     updateBookings() {
       this.$store.dispatch("fetchWeekBookings", this.$store.getters.getWeek);
@@ -169,32 +152,6 @@ export default {
         0
       );
     },
-
-    // getDuration(start, end) {
-    //   const startDateMs = new Date(start).getTime();
-    //   const endDateMs = new Date(end).getTime();
-    //   return (endDateMs - startDateMs) / dayMs;
-    // },
-
-    // getOffset(start) {
-    //   const startDateMs = new Date(start).getTime();
-    //   const offset = (startDateMs - this.$store.getters.getWeek) / dayMs;
-    //   // console.log(this.$store.getters.getWeek);
-    //   return offset;
-    // },
-
-    // getEndOffset(end) {
-    //   const endDateMs = new Date(end).getTime();
-    //   const offset = (this.$store.getters.getWeek + weekMs - endDateMs) / dayMs;
-    //   // console.log(this.$store.getters.getWeek);
-    //   return offset;
-    // },
-
-    // getBookingsByRoom(roomName) {
-    //   return this.bookings.filter(({ roomDetails }) => {
-    //     return roomDetails.name === roomName;
-    //   });
-    // },
   },
 };
 </script>
@@ -229,31 +186,22 @@ export default {
   }
 }
 
-/* .book {
-  box-sizing: border-box;
-  position: absolute;
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.popup {
+  /* position: fixed; */
+  width: 200px;
+  height: 300px;
 
   left: 0;
-  bottom: 0;
-  width: 300px;
-  height: 70px;
+  top: 0;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 20px;
-
-  border-radius: 15px;
-  border-right: 3px solid white;
-  background-color: rgb(41, 131, 249);
-
-  &.right {
-    justify-content: flex-end;
-  }
-
-  &.left {
-    justify-content: flex-start;
-  }
-} */
+  background-color: tomato;
+}
 </style>
