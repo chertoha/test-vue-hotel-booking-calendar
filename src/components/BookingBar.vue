@@ -1,7 +1,7 @@
 <template>
   <!-- <div> -->
   <div
-    @click="$emit('emitPopup', booking)"
+    @click="emitPopup"
     :class="['book']"
     :style="{
       width: `calc((100% / 7) * ${getDuration(booking.start, booking.end)})`,
@@ -75,15 +75,16 @@ export default {
       return offset;
     },
 
-    // emitOpenPopup() {
-    //   this.$emit("emitOpenPopup");
-    // },
+    emitPopup(event) {
+      this.$emit("emitPopup", { event, booking: this.booking });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .book {
+  cursor: pointer;
   box-sizing: border-box;
   position: absolute;
 

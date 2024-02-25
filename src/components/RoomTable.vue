@@ -39,16 +39,26 @@
       </div>
     </div>
 
-    <div
+    <!-- <div
       v-if="isPopupOpen"
       class="backdrop"
       @click="closePopup"
+    > -->
+    <div
+      class="popup"
+      v-if="isPopupOpen"
+      :style="{
+        left: `${popupCoords.x}px`,
+        top: `${popupCoords.y}px`,
+        transform: `${popupCoords.left ? 'translateX(0)' : 'translateX(-100%)'} ${
+          popupCoords.top ? 'translateY(0)' : 'translateY(-100%)'
+        }`,
+      }"
     >
-      <div class="popup">
-        {{ currentBooking }}
-      </div>
+      {{ currentBooking }}
     </div>
   </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -69,6 +79,12 @@ export default {
   data() {
     return {
       isPopupOpen: false,
+      popupCoords: {
+        x: 0,
+        y: 0,
+        left: true,
+        top: true,
+      },
       openedBooking: {},
     };
   },
@@ -116,12 +132,27 @@ export default {
   mounted() {
     this.fetchRooms();
     this.fetchWeekBookings(this.$store.getters.getWeek);
-  },
 
-  beforeDestroy() {},
+    window.addEventListener("click", e => {
+      if (!e.target.closest(".book")) {
+        this.isPopupOpen = false;
+      }
+    });
+  },
 
   watch: {
     week: "updateBookings",
+
+    isPopupOpen() {
+      const closePopup = () => {
+        this.isPopupOpen = false;
+        window.removeEventListener("scroll", closePopup);
+      };
+
+      if (this.isPopupOpen) {
+        window.addEventListener("scroll", closePopup);
+      }
+    },
   },
 
   methods: {
@@ -131,7 +162,15 @@ export default {
 
     ...mapActions(["fetchRooms", "fetchWeekBookings"]),
 
-    openPopup(booking) {
+    openPopup({ event, booking }) {
+      const x = event.clientX;
+      const y = event.clientY;
+
+      const left = x <= window.innerWidth / 2;
+      const top = y <= window.innerHeight / 2;
+
+      this.popupCoords = { x, y, left, top };
+
       this.currentBooking = {};
 
       this.isPopupOpen = false;
@@ -192,10 +231,11 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+  /* pointer-events: none; */
 }
 
 .popup {
-  /* position: fixed; */
+  position: fixed;
   width: 200px;
   height: 300px;
 
