@@ -13,7 +13,10 @@ You can open current app on github pages deploy by this link [Deploy link](https
 
 ## Author
 
-[Anton Chertok](https://github.com/chertoha)
+Anton Chertok
+
+- [Github](https://github.com/chertoha)
+- [LinkedIn](https://www.linkedin.com/in/anton-chertok/)
 
 ## Features
 
