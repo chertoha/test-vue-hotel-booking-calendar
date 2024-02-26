@@ -1,24 +1,16 @@
-# test-vue-hotel-booking-calendar
+# Booking calendar app
 
-## Project setup
-```
-npm install
-```
+## Deploy
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+You can open current app on github pages deploy by this link [Deploy link](https://chertoha.github.io/test-vue-hotel-booking-calendar/)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Local install
 
-### Lints and fixes files
-```
-npm run lint
-```
+1. Clone repository to your computer with GitBash or PowerShell console -> **git clone [repo name]**
+2. Enter cloned project folder and install app -> **npm install**
+3. Start application locally -> **npm run serve**
+4. Open app in your browser with url: http://localhost:8080/
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Author
+
+- [Anton Chertok](https://github.com/chertoha)
