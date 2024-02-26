@@ -1,8 +1,8 @@
-import { weekMs } from "@/utils/calculateWeek";
+import { getCurrentWeekStartDateMs, weekMs } from "@/utils/calculateWeek";
 
 export default {
   state: {
-    weekStart: 0,
+    weekStart: getCurrentWeekStartDateMs(),
   },
 
   mutations: {
