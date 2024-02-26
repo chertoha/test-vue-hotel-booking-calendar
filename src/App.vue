@@ -1,12 +1,13 @@
 <template>
-  <div id="app">
-    <NavBar />
-    <RoomTable />
+  <div
+    id="app"
+    class="main-wrapper"
+  >
+    <div class="navbar-wrapper">
+      <NavBar />
+    </div>
 
-    <!-- <div
-      v-if="isVisible"
-      class="popup"
-    ></div> -->
+    <RoomTable />
   </div>
 </template>
 
@@ -16,9 +17,7 @@ import RoomTable from "./components/RoomTable.vue";
 
 export default {
   name: "App",
-  data: () => ({
-    // isVisible: false,
-  }),
+
   components: {
     NavBar,
     RoomTable,
@@ -30,24 +29,24 @@ export default {
 
   watch: {},
 
-  methods: {
-    // openPopup() {
-    //   console.log("asdf");
-    //   this.isVisible = true;
-    // },
-  },
+  methods: {},
 };
 </script>
 
-<style lang="scss">
-/* .popup {
-  position: absolute;
-  width: 200px;
-  height: 300px;
+<style lang="scss" scoped>
+.main-wrapper {
+  padding: 40px 16px;
 
-  left: 0;
-  top: 0;
+  @media screen and (min-width: 768px) {
+    padding: 80px 32px;
+  }
 
-  background-color: tomato;
-} */
+  @media screen and (min-width: 1200px) {
+    padding: 120px 64px;
+  }
+}
+
+.navbar-wrapper {
+  margin-bottom: 20px;
+}
 </style>

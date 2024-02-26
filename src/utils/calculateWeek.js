@@ -39,7 +39,3 @@ export const createWeekDaysList = startDateMs => {
 export const createDateMs = dateString => {
   return new Date(dateString).getTime();
 };
-
-// export const getDaysDuration = (start, end) => {
-
-// }

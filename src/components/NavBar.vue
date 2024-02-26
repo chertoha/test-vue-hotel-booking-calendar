@@ -1,13 +1,17 @@
 <template>
-  <div>
-    <div>
-      <button @click="decreaseWeek">&lt;</button>
-      <button @click="increaseWeek">&gt;</button>
-      <button @click="setCurrentWeek">Today</button>
-    </div>
-
-    <!-- {{ $store.getters.getWeek }} -->
-    <!-- {{ week }} -->
+  <div class="wrapper">
+    <CommonButton
+      :clickHandler="decreaseWeek"
+      :label="'&lt;'"
+    />
+    <CommonButton
+      :clickHandler="increaseWeek"
+      :label="'&gt;'"
+    />
+    <CommonButton
+      :clickHandler="setCurrentWeek"
+      :label="'Today'"
+    />
   </div>
 </template>
 
@@ -17,22 +21,30 @@ import {
   // transformMsToDate,
 } from "@/utils/calculateWeek";
 import { mapMutations } from "vuex";
+import CommonButton from "./UIKit/CommonButton.vue";
 
 export default {
   name: "NavBar",
-
   computed: {},
-
-  mounted() {
-    // this.setCurrentWeek();
-  },
 
   methods: {
     ...mapMutations(["increaseWeek", "decreaseWeek", "setWeek"]),
-
     setCurrentWeek() {
       this.setWeek(getCurrentWeekStartDateMs());
     },
   },
+  components: { CommonButton },
 };
 </script>
+
+<style lang="scss" scoped>
+.wrapper {
+  display: flex;
+  column-gap: 10px;
+
+  & button {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+</style>

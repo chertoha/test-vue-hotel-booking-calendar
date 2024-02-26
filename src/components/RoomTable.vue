@@ -1,25 +1,25 @@
 <template>
   <div class="grid-component">
-    <div class="row">
-      <div class="col">col</div>
+    <div class="head-row">
+      <div class="col first-cell"></div>
       <div class="grid">
         <div
-          :class="['cell', { today: day === today }]"
+          :class="['cell', 'head-cell', { today: day === today }]"
           v-for="day in week"
           :key="day"
         >
-          {{ day }}
+          <span class="date">{{ day }}</span>
         </div>
       </div>
     </div>
 
     <div
       v-for="{ room, bookings } in roomWithBookings"
-      class="row tab-row"
+      class="row"
       :style="{ height: `calc(100px * ${countOverlappedBookings(bookings)})` }"
       :key="room"
     >
-      <div class="col">{{ room }}</div>
+      <div class="col room-name">{{ room }}</div>
       <div class="grid">
         <div
           :class="['cell', { today: day === today }]"
@@ -28,7 +28,6 @@
           :key="day"
         ></div>
 
-        <!--  -->
         <BookingBar
           @emitPopup="openPopup"
           v-for="(booking, index) in bookings"
@@ -129,10 +128,12 @@ export default {
       const closePopup = () => {
         this.isPopupOpen = false;
         window.removeEventListener("scroll", closePopup);
+        window.removeEventListener("resize", closePopup);
       };
 
       if (this.isPopupOpen) {
         window.addEventListener("scroll", closePopup);
+        window.addEventListener("resize", closePopup);
       }
     },
   },
@@ -169,14 +170,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.row {
+.row,
+.head-row {
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 200px 1fr;
   width: 100%;
+  min-height: 100px;
+
+  @media screen and (max-width: 767.98px) {
+    grid-template-columns: 1fr;
+  }
 }
 
-.tab-row {
-  min-height: 100px;
+.head-row {
+  min-height: auto;
 }
 
 .grid {
@@ -187,14 +194,56 @@ export default {
 }
 
 .col {
-  border: 1px solid gray;
+  border: 1px solid rgb(225, 225, 225);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  color: rgb(56, 98, 54);
+  font-weight: 700;
+
+  @media screen and (max-width: 767.98px) {
+    display: none;
+  }
+}
+
+.first-cell {
+  border-top: none;
+  border-left: none;
 }
 
 .cell {
-  border: 1px solid gray;
+  border: 1px solid rgb(225, 225, 225);
 
   &.today {
     background-color: rgb(204, 239, 204);
+  }
+
+  &.head-cell {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    @media screen and (min-width: 768px) {
+      font-size: 16px;
+    }
+
+    @media screen and (min-width: 1200px) {
+      font-size: 20px;
+    }
+  }
+
+  .date {
+    @media screen and (max-width: 767.98px) {
+      transform: rotate(-180deg);
+      writing-mode: vertical-lr;
+      text-orientation: sideways;
+    }
   }
 }
 </style>

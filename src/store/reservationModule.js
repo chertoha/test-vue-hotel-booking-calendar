@@ -18,7 +18,6 @@ export default {
   actions: {
     fetchWeekBookings(context, payload) {
       const data = getBookingsbyWeek(payload);
-      // console.log(data);
 
       context.commit("setBookings", data);
     },

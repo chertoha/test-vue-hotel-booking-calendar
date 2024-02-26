@@ -10,8 +10,6 @@
       }`,
     }"
   >
-    <!-- {{ openedBooking }} -->
-
     <div class="data-wrapper">
       <div class="contacts">
         <p class="title">{{ openedBooking.name }}</p>
@@ -32,20 +30,21 @@
     </div>
 
     <div class="toolbar">
-      <button
-        class="button"
-        type="button"
-        @click="onClose"
-      >
-        Close
-      </button>
+      <CommonButton
+        :clickHandler="onClose"
+        :label="'Close'"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import CommonButton from "@/components/UIKit/CommonButton";
+
 export default {
   name: "PopUp",
+
+  components: { CommonButton },
 
   props: {
     isPopupOpen: {
@@ -90,8 +89,7 @@ export default {
 .data-wrapper {
   padding: 20px;
 }
-.contacts {
-}
+
 .title {
   font-size: 24px;
   margin-bottom: 10px;
@@ -120,21 +118,5 @@ export default {
 .toolbar {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding: 20px;
-}
-.button {
-  margin: 0;
-  border: none;
-  padding: 10px 30px;
-  cursor: pointer;
-  color: rgb(238, 234, 234);
-  font-size: 20px;
-
-  border-radius: 10px;
-  background-color: rgb(80, 72, 72);
-
-  transition: background-color 300ms ease-in-out;
-  &:hover {
-    background-color: rgb(120, 111, 111);
-  }
 }
 </style>

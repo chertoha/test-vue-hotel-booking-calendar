@@ -1,5 +1,4 @@
 <template>
-  <!-- <div> -->
   <div
     @click="emitPopup"
     :class="['book']"
@@ -27,12 +26,16 @@
           : `20px`,
     }"
   >
-    <span>
-      {{ booking.name }}
-    </span>
-  </div>
+    <div class="content">
+      <span>
+        {{ booking.name }}
+      </span>
 
-  <!-- </div> -->
+      <span class="content-room">
+        {{ booking.roomDetails.name }}
+      </span>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -97,7 +100,7 @@ export default {
   align-items: center;
   justify-content: center;
 
-  font-size: 20px;
+  font-size: 12px;
 
   border-radius: 15px;
   border-right: 3px solid white;
@@ -109,6 +112,27 @@ export default {
 
   &.left {
     justify-content: flex-start;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: 12px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    font-size: 20px;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column-reverse;
+  row-gap: 10px;
+}
+
+.content-room {
+  font-weight: 700;
+  @media screen and (min-width: 768px) {
+    display: none;
   }
 }
 </style>
